@@ -2,5 +2,44 @@
 
 {% block main %}
     <h1>Bootstrap starter template</h1>
-    <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <h2>Summary</h2>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <h2>Assets</h2>
+
+            {% if assets is not empty %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Holdings</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for asset in assets %}
+                        <tr>
+                            <th scope="row">{{ asset.coin.name }}</th>
+                            <td>13,356.87</td>
+                            <td>{{ asset.holdings }}</td>
+                            <td>1,335.68</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                No asset yet.
+            {% endif %}
+
+            {{ form_start(assetForm) }}
+                {{ form_widget(assetForm) }}
+
+            <button type="submit" class="btn btn-outline-warning">Add asset</button>
+            {{ form_end(assetForm) }}
+        </div>
+    </div>
 {% endblock %}

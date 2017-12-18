@@ -17,6 +17,13 @@ class Asset
     private $id;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     */
+    private $user;
+
+    /**
      * @var Coin
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Coin")
@@ -24,11 +31,36 @@ class Asset
     private $coin;
 
     /**
+     * @var float
+     *
+     * @ORM\Column()
+     */
+    private $holdings;
+
+    /**
      * @return mixed
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return Asset
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
     }
 
     /**
@@ -46,6 +78,24 @@ class Asset
     public function setCoin($coin)
     {
         $this->coin = $coin;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getHoldings()
+    {
+        return $this->holdings;
+    }
+
+    /**
+     * @param float $holdings
+     * @return Asset
+     */
+    public function setHoldings($holdings)
+    {
+        $this->holdings = $holdings;
         return $this;
     }
 }

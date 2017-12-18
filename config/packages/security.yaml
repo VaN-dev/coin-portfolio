@@ -1,11 +1,29 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 13
+
     # https://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        user_db:
+            entity: { class: App\Entity\User, property: username }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        app:
+            anonymous: ~
+            pattern: .*
+            provider: user_db
+            form_login:
+                check_path: login
+                login_path: login
+            logout:
+                path:   /logout
+                target: /
+
         main:
             anonymous: ~
 
@@ -20,5 +38,6 @@ security:
             # https://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
