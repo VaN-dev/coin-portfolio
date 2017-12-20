@@ -17,7 +17,7 @@ class AppExtension extends AbstractExtension
     public function priceFilter($number, $decimals = 2, $decPoint = '.', $thousandsSep = ',')
     {
         $price = number_format($number, $decimals, $decPoint, $thousandsSep);
-        $price = '$'.$price;
+        $price = '€'.$price;
 
         return $price;
     }
