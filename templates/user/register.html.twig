@@ -1,13 +1,17 @@
 {%  extends 'base.html.twig' %}
 
 {% block main %}
-    {#{% if error %}#}
-        {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
-    {#{% endif %}#}
+    <div class="row justify-content-md-center">
+        <div class="col col-lg-4">
+            {#{% if error %}#}
+                {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+            {#{% endif %}#}
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
 
-        <button type="submit" class="btn btn-outline-warning">Register</button>
-    {{ form_end(form) }}
+                <button type="submit" class="btn btn-block btn-outline-warning">Register</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

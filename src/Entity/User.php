@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -11,6 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     /**
+     * @var integer
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -32,25 +35,31 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $salt;
+
+    /**
      * @var array
      *
      * @ORM\Column(type="array")
      */
     private $roles;
 
+    /**
+     * @var Asset[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Asset", mappedBy="user")
+     */
+    private $assets;
+
     public function __construct()
     {
+        $this->salt = md5(uniqid(null, true));
         $this->roles = ['ROLE_USER'];
-    }
-
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    public function getSalt()
-    {
-        // TODO: Implement getSalt() method.
+        $this->assets = new ArrayCollection();
     }
 
     public function eraseCredentials()
@@ -100,6 +109,70 @@ class User implements UserInterface
     public function setPassword($password)
     {
         $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param $role
+     * @return $this
+     */
+    public function addRole($role)
+    {
+        $this->roles[] = $role;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @param $salt
+     * @return $this
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+        return $this;
+    }
+
+    /**
+     * @return Asset[]
+     */
+    public function getAssets()
+    {
+        return $this->assets;
+    }
+
+    /**
+     * @param Asset $asset
+     * @return User
+     */
+    public function addAsset(Asset $asset)
+    {
+        $this->assets->add($asset);
+        return $this;
+    }
+
+    /**
+     * @param Asset $asset
+     * @return User
+     */
+    public function removeAsset(Asset $asset)
+    {
+        $this->assets->removeElement($asset);
         return $this;
     }
 }

@@ -1,45 +1,77 @@
 {%  extends 'base.html.twig' %}
 
 {% block main %}
-    <h1>Bootstrap starter template</h1>
+    <h1 class="text-center">Welcome to coin-portfol.io</h1>
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-6">
-            <h2>Summary</h2>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-            <h2>Assets</h2>
 
-            {% if assets is not empty %}
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Holdings</th>
-                        <th scope="col">Value</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for asset in assets %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <h2>Summary</h2>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <a href="#" class="btn btn-outline-dark btn-sm pull-right" data-toggle="modal" data-target="#js-add-asset-modal">
+                    <i class="fa fa-plus"></i>
+                </a>
+
+                <h2>Assets</h2>
+
+                <!-- Modal -->
+                <div class="modal fade" id="js-add-asset-modal" tabindex="-1" role="dialog" aria-labelledby="js-add-asset-modal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add asset</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ form_start(assetForm) }}
+                                    {{ form_widget(assetForm) }}
+                                    <button type="submit" class="btn btn-outline-warning pull-right">Add asset</button>
+                                {{ form_end(assetForm) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if portfolio is not empty %}
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <th scope="row">{{ asset.coin.name }}</th>
-                            <td>13,356.87</td>
-                            <td>{{ asset.holdings }}</td>
-                            <td>1,335.68</td>
+                            <th scope="col">Name</th>
+                            <th scope="col">Holdings</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Valuation</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-                No asset yet.
-            {% endif %}
-
-            {{ form_start(assetForm) }}
-                {{ form_widget(assetForm) }}
-
-            <button type="submit" class="btn btn-outline-warning">Add asset</button>
-            {{ form_end(assetForm) }}
+                        </thead>
+                        <tbody>
+                        {% for row in portfolio %}
+                            <tr>
+                                <th scope="row">{{ row.asset.coin.name }}</th>
+                                <td>{{ row.asset.holdings }}</td>
+                                <td>{{ row.ticker.value | price }}</td>
+                                <td>{{ (row.asset.holdings * row.ticker.value) | price }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    No asset yet.
+                {% endif %}
+            </div>
         </div>
-    </div>
+    {% else %}
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-4">
+                <p>
+                    To start using coin-portfol.io, please sign in.
+                </p>
+
+                {% include 'security/login-form.html.twig' %}
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock %}

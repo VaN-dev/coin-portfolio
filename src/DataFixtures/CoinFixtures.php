@@ -11,7 +11,7 @@ use App\Entity\Coin;
  * Class CoinFixtures
  * @package App\DataFixtures
  */
-class CoinFixtures extends Fixture  implements OrderedFixtureInterface
+class CoinFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
      * @param ObjectManager $manager

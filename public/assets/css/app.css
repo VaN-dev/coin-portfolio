@@ -1,4 +1,24 @@
 body {
     padding-top: 5rem;
-    background: #454d54 !important;
+    background: #454d54;
+    color: #ccc;
+}
+
+.table thead th {
+    border-top: none;
+}
+.table thead th, .table td, .table th {
+    border-color: #343a40;
+}
+
+a {
+    color: #fff;
+    text-decoration: underline;
+}
+a:hover {
+    color: #fff;
+}
+
+.navbar a {
+    text-decoration: none;
 }

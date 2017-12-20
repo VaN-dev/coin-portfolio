@@ -12,6 +12,6 @@ class DefaultController extends Controller
      */
     public function index()
     {
-        die('authed as admin');
+        return $this->render('admin/index.html.twig');
     }
 }

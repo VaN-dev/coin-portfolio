@@ -19,7 +19,7 @@ class Asset
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="assets")
      */
     private $user;
 
@@ -33,7 +33,7 @@ class Asset
     /**
      * @var float
      *
-     * @ORM\Column()
+     * @ORM\Column(type="decimal", precision=20, scale=10)
      */
     private $holdings;
 

@@ -2,24 +2,23 @@
 
 namespace App\Repository;
 
-use App\Entity\Coin;
+use App\Entity\Ticker;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class CoinRepository extends ServiceEntityRepository
+class TickerRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Coin::class);
+        parent::__construct($registry, Ticker::class);
     }
 
     /*
     public function findBySomething($value)
     {
-        return $this->createQueryBuilder('c')
-            ->where('c.something = :value')->setParameter('value', $value)
-            ->orderBy('c.id', 'ASC')
+        return $this->createQueryBuilder('t')
+            ->where('t.something = :value')->setParameter('value', $value)
+            ->orderBy('t.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()

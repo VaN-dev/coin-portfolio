@@ -12,7 +12,19 @@ class DefaultController extends Controller
     public function index(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $assets  = $em->getRepository('App:Asset')->findBy(['user' => $this->getUser()]);
+
+        $portfolio = [];
+        /* @var Asset[] $assets */
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $assets = $this->getUser()->getAssets();
+            $fiat = $em->getRepository('App:Fiat')->findOneBy(['symbol' => 'EUR']);
+            foreach ($assets as $asset) {
+                $portfolio[] = [
+                    'asset' => $asset,
+                    'ticker' => $em->getRepository('App:Ticker')->findOneBy(['coin' => $asset->getCoin(), 'fiat' => $fiat]),
+                ];
+            }
+        }
 
         $asset = (new Asset())
             ->setUser($this->getUser())
@@ -29,7 +41,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('default/index.html.twig', [
-            'assets' => $assets,
+            'portfolio' => $portfolio,
             'assetForm' => $assetForm->createView(),
         ]);
     }
