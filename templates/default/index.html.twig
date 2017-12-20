@@ -51,8 +51,8 @@
                             <tr>
                                 <th scope="row">{{ row.asset.coin.name }}</th>
                                 <td>{{ row.asset.holdings }}</td>
-                                <td>{{ row.ticker.value | price }}</td>
-                                <td>{{ (row.asset.holdings * row.ticker.value) | price }}</td>
+                                <td>{% if row.ticker is not null %}{{ row.ticker.value | price }}{% else %}-{% endif %}</td>
+                                <td>{% if row.ticker is not null %}{{ (row.asset.holdings * row.ticker.value) | price }}{% else %}-{% endif %}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
