@@ -37,13 +37,14 @@
                 </div>
 
                 {% if portfolio is not empty %}
+                    {% set total = 0 %}
                     <table class="table">
                         <thead>
                         <tr>
                             <th scope="col">Name</th>
                             <th scope="col">Holdings</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Valuation</th>
+                            <th scope="col" class="text-right">Valuation</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -52,10 +53,19 @@
                                 <th scope="row">{{ row.asset.coin.name }}</th>
                                 <td>{{ row.asset.holdings }}</td>
                                 <td>{% if row.ticker is not null %}{{ row.ticker.value | price }}{% else %}-{% endif %}</td>
-                                <td>{% if row.ticker is not null %}{{ (row.asset.holdings * row.ticker.value) | price }}{% else %}-{% endif %}</td>
+                                <td class="text-right">{% if row.ticker is not null %}{{ (row.asset.holdings * row.ticker.value) | price }}{% else %}-{% endif %}</td>
                             </tr>
+                            {% if row.ticker is not null %}
+                                {% set total = total + (row.asset.holdings * row.ticker.value) %}
+                            {% endif %}
                         {% endfor %}
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th scope="row">Total</th>
+                            <td colspan="3" class="text-right">{{ total | price }}</td>
+                        </tr>
+                        </tfoot>
                     </table>
                 {% else %}
                     No asset yet.
