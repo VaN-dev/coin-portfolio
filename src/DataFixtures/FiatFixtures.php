@@ -35,7 +35,7 @@ class FiatFixtures extends Fixture implements OrderedFixtureInterface
         $manager->flush();
 
         $this->addReference('fiat-01', $fiat01);
-        $this->addReference('fiat-01', $fiat02);
+        $this->addReference('fiat-02', $fiat02);
     }
 
     public function getOrder()

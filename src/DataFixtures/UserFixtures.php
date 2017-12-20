@@ -34,7 +34,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $user01 = (new User())
-            ->setUsername('admin@portfol.io')
+            ->setUsername('admin@coin-portfol.io')
             ->addRole('ROLE_ADMIN')
         ;
 
