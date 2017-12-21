@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Coin;
 use App\Service\ApiClient\CoinmarketcapClient;
+use App\Service\Coin\Importer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,29 +26,14 @@ class CoinController extends Controller
     /**
      * @Route("/admin/coin/sync", name="admin.coin.sync")
      *
-     * @param CoinmarketcapClient $client
+     * @param Importer $importer
      * @return RedirectResponse
      */
-    public function sync(CoinmarketcapClient $client)
+    public function sync(Importer $importer)
     {
-        $em = $this->getDoctrine()->getManager();
+        $coins = $importer->import();
 
-        $remoteCoins = $client->getCoins();
-        $localCoins = array_map(function(Coin $coin) { return ['name' => $coin->getName(), 'symbol' => $coin->getSymbol()]; }, $em->getRepository('App:Coin')->findAll());
-
-        $missingCoins = array_filter($remoteCoins, function ($coin) use ($localCoins) {
-            return !in_array($coin, $localCoins);
-        });
-
-        foreach($missingCoins as $missingCoin) {
-            $coin = (new Coin())
-                ->setName($missingCoin['name'])
-                ->setSymbol($missingCoin['symbol'])
-            ;
-            $em->persist($coin);
-        }
-
-        $em->flush();
+        $this->getDoctrine()->getManager()->flush();
 
         return new RedirectResponse($this->generateUrl('admin.coin'));
     }

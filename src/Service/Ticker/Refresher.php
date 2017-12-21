@@ -53,7 +53,7 @@ class Refresher
             foreach ($fiats as $fiat) {
                 $fiat_property = 'price_'.strtolower($fiat->getSymbol());
 
-                if (null !== $result->$fiat_property) {
+                if (null !== $result->$fiat_property && isset($coins[$result->symbol])) {
                     $ticker = (new Ticker())
                         ->setFiat($fiat)
                         ->setCoin($coins[$result->symbol])
