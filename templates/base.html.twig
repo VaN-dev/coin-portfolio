@@ -28,6 +28,30 @@
                             </li>
                         </ul>
 
+                        {#<form id="js-fiat-selector">#}
+                            {#<div class="form-row align-items-center">#}
+                                {#<div class="col-auto">#}
+                                    {#<select class="custom-select mb-2 mr-sm-2 mb-sm-0 fiat-selector" id="inlineFormCustomSelect">#}
+                                        {#<option value="1">Euro</option>#}
+                                        {#<option value="2">US Dollar</option>#}
+                                    {#</select>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</form>#}
+
+                        {#<form name="app_form_asset" method="post">#}
+                            {#<div id="app_form_asset">#}
+                                {#<div class="form-group">#}
+                                    {#<select id="app_form_asset_fiat" name="app_form_asset[fiat]" class="form-control">#}
+                                        {#<option value="1">US Dollar</option>#}
+                                        {#<option value="2">Euro</option>#}
+                                    {#</select>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</form>#}
+
+                        {{ render(controller('App\\Controller\\FiatController::defaultFiatForm')) }}
+
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                             <ul class="navbar-nav mt-auto">
                                 <li class="nav-item dropdown">
@@ -39,7 +63,6 @@
                                             <div class="dropdown-divider"></div>
                                         {% endif %}
                                         <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
-
                                     </div>
                                 </li>
                             </ul>
@@ -68,6 +91,14 @@
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+            <script type="text/javascript">
+                $(function() {
+                    $(document).on('change', '#js-fiat-selector', function() {
+                        console.log($(this).find(":selected").val());
+                    });
+                });
+            </script>
         {% endblock %}
     </body>
 </html>

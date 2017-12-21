@@ -49,6 +49,13 @@ class User implements UserInterface
     private $roles;
 
     /**
+     * @var Fiat
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Fiat")
+     */
+    private $defaultFiat;
+
+    /**
      * @var Asset[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Asset", mappedBy="user")
@@ -145,6 +152,24 @@ class User implements UserInterface
     public function setSalt($salt)
     {
         $this->salt = $salt;
+        return $this;
+    }
+
+    /**
+     * @return Fiat
+     */
+    public function getDefaultFiat()
+    {
+        return $this->defaultFiat;
+    }
+
+    /**
+     * @param Fiat $defaultFiat
+     * @return User
+     */
+    public function setDefaultFiat(Fiat $defaultFiat)
+    {
+        $this->defaultFiat = $defaultFiat;
         return $this;
     }
 

@@ -11,11 +11,7 @@ body {
     border-color: #343a40;
 }
 
-a {
-    color: #fff;
-    text-decoration: underline;
-}
-a:hover {
+a, a:hover {
     color: #fff;
 }
 

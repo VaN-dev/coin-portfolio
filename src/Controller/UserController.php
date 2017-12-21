@@ -39,4 +39,12 @@ class UserController extends Controller
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/user/set-default-fiat", name="admin.user.set_default_fiat")
+     */
+    public function setDefaultFiat()
+    {
+        die('ok');
+    }
 }
