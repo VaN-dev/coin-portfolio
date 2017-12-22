@@ -21,7 +21,7 @@ class DefaultController extends Controller
             foreach ($assets as $asset) {
                 $portfolio[] = [
                     'asset' => $asset,
-                    'ticker' => $em->getRepository('App:Ticker')->findOneBy(['coin' => $asset->getCoin(), 'fiat' => $fiat]),
+                    'ticker' => $em->getRepository('App:Ticker')->findOneBy(['coin' => $asset->getCoin(), 'fiat' => $fiat], ['createdAt' => 'DESC']),
                 ];
             }
         }
