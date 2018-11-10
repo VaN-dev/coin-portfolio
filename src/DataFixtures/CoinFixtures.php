@@ -25,7 +25,7 @@ class CoinFixtures extends Fixture implements OrderedFixtureInterface
         $manager->persist($coin01);
 
         $coin02 = (new Coin())
-            ->setName('Ripple')
+            ->setName('XRP')
             ->setSymbol('XRP')
         ;
         $manager->persist($coin02);
